@@ -1,0 +1,25 @@
+@font-face {
+  font-family: SofiaPro;
+  src: url('../../assets/SVN-SofiaPro-Regular.5b3d1be43dce9b034c9f.woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: SofiaPro;
+  src: url('../../assets/SVN-SofiaPro-Medium.f29daefe0725dbae93c7.woff2');
+  font-weight: 500;
+}
+
+:root {
+  --font-family: 'SofiaPro';
+}
+
+* {
+  font-family: var(--font-family) !important;
+  box-sizing: inherit;
+  body {
+    margin: 0;
+    letter-spacing: -0.01em;
+    color: rgb(17, 24, 28);
+  }
+}
