@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Stack, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { useRef, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, UseFormHandleSubmit, useForm } from 'react-hook-form'
 import { FormattedMessage } from 'react-intl'
 import { EMPLOYEE_TYPE, TABLE_CONTRACT } from '../../../assets/data/data'
 import CustomDivider from '../../../components/DividerComponent/DividerComponent'
@@ -83,7 +83,7 @@ const ContractInformation = () => {
                                     <label className="">
                                         <FormattedMessage id="uploadFile" />
                                         <Controller
-                                            name="document"
+                                            name="documents"
                                             control={control}
                                             rules={{ required: true }}
                                             render={({ field }: any) => {

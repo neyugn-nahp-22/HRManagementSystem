@@ -8,15 +8,22 @@ import EmploymentDetailsComponent from '../layouts/EmploymentDetails'
 import Other from '../layouts/Other'
 import PersonalInformation from '../layouts/PersonalInformation'
 import SalaryWages from '../layouts/SalaryWages'
+import { ICreateParams } from '../../../models/employee'
+import { useForm } from 'react-hook-form'
 
 
 
 const MenuCreate = () => {
-    const [activeTab, setActiveTab] = useState('0');
+    const { control, handleSubmit, formState: { errors } } = useForm<ICreateParams>({ mode: 'onBlur' })
 
+    const [activeTab, setActiveTab] = useState('0');
     const handleTabChange = (event: React.SyntheticEvent, newTab: string) => {
         setActiveTab(newTab);
     };
+
+    const onSubmit = (data: ICreateParams) => {
+        console.log(data);
+    }
 
     const MENU_CREATE = [
         {
@@ -62,7 +69,7 @@ const MenuCreate = () => {
                 }}>
                     <FormattedMessage id="employeeManagement" />
                 </Typography>
-                <LoadingButton sx={{ textTransform: 'none' }} variant='contained' disableElevation disabled size='large' >Add</LoadingButton>
+                <LoadingButton sx={{ textTransform: 'none' }} variant='contained' disableElevation size='large' onClick={handleSubmit(onSubmit)} >Add</LoadingButton>
             </Box>
             <TabContext value={activeTab}>
                 <Stack sx={{ flexFlow: 'row wrap', gap: '4px', marginBottom: "20px" }}>
