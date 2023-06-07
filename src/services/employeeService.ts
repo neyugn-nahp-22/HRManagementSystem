@@ -33,6 +33,17 @@ export const addEmployeeService = async (data: ICreateParams): Promise<AxiosResp
   }
 };
 
+export const deleteEmployeeService = (id: any) => {
+  return axios.delete(API_PATHS.deleteEmployee, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+    },
+    data: {
+      record_ids: id,
+    },
+  });
+};
+
 export const searchEmployee = async (page: number, search: string) => {
   return axios.get(`${API_PATHS.getEmployee}?search=${search}&page=${page}`, {
     headers: {

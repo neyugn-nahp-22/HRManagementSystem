@@ -74,5 +74,7 @@
   "hrmAccount": "HRM User Account",
   "document": "Document",
   "settings": "Settings",
-  "askSignOut": "Do you wish to sign out?"
+  "requestLogout": "Do you wish to sign out?",
+  "delete": "Delete",
+  "requestDelete": "Are you sure you want to delete?"
 }

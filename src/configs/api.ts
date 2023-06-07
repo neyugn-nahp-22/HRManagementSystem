@@ -10,4 +10,5 @@ export const API_PATHS = {
   department: `${APIHost}/department`,
   position: `${APIHost}/position`,
   marriage: `${APIHost}/marriage`,
+  deleteEmployee: `${APIHost}/employee/multiple-delete`,
 };

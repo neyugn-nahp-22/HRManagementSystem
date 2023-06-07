@@ -6,12 +6,14 @@ import { useHistory, useLocation } from 'react-router'
 import BreadcrumbComponent from '../../../components/BreadcrumbComponent/BreadcrumbComponent'
 import { AddIcon, SearchIcon } from '../../../components/Icons'
 import { ROUTES } from '../../../configs/routes'
-import { getEmployeeByPage, searchEmployee } from '../../../services/employeeService'
+import { deleteEmployeeService, getEmployeeByPage, searchEmployee } from '../../../services/employeeService'
 import TableBodyEmployee from '../components/TableBodyEmployee'
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import classNames from 'classnames/bind'
+import CustomDialog from '../../../components/CustomDialog/CustomDialog'
 import CustomDivider from '../../../components/DividerComponent/DividerComponent'
+import toastMessage from '../../../components/toast/Toast'
 import styles from '../../function/layouts/styles.module.scss'
 import TableHeadEmployee from '../components/TableHeadEmployee'
 
@@ -33,10 +35,10 @@ const EmployeePage = () => {
     const [to, setTo] = useState(0)
     const [totalEmployee, setTotalEmployee] = useState(0)
     const [searchQuery, setSearchQuery] = useState<string>('')
+    const [openDialog, setOpenDialog] = useState<boolean>(false)
     // console.log(listDataByPage, 'aaaaaa');
-
+    console.log(selected);
     const isSelected = (staffID: string) => selected.indexOf(staffID) !== -1;
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (searchQuery) {
@@ -122,6 +124,21 @@ const EmployeePage = () => {
         }
     }
 
+    const handleDeleteEmployee = async () => {
+        try {
+            setLoading(true)
+            await deleteEmployeeService(selected)
+            setLoading(false)
+            setOpenDialog(false)
+            toastMessage('success', 'Success')
+            setSelected([])
+            await getDataByPage(currentPage)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value)
         // console.log(searchQuery, 'nameSearch');
@@ -133,7 +150,8 @@ const EmployeePage = () => {
 
     const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = listDataByPage.map((item: any) => item.staff_id)
+            const newSelected = listDataByPage.map((item: any) => item.id)
+            // console.log(newSelected);
             setSelected(newSelected)
             return
         }
@@ -143,6 +161,7 @@ const EmployeePage = () => {
     return (
         <>
             <BreadcrumbComponent items={[{ label: 'General', path: `${ROUTES.home}` }, { label: "Employee Management" }]} />
+            {/* Title & Search Data */}
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: '10px', marginBottom: "20px" }}>
                 <Typography variant="h3" sx={{
                     fontWeight: 500,
@@ -176,16 +195,17 @@ const EmployeePage = () => {
                     }}
                 />
             </Box>
-            <Paper sx={{
-                color: "rgb(17, 24, 28)",
-                boxShadow: "rgb(241, 243, 245) 0px 5px 20px",
-                backgroundColor: "rgb(251, 252, 253)",
-                borderRadius: "12px",
-                padding: "10px",
-                marginBottom: "10px"
-            }}
+            <Paper
+                sx={{
+                    color: "rgb(17, 24, 28)",
+                    boxShadow: "rgb(241, 243, 245) 0px 5px 20px",
+                    backgroundColor: "rgb(251, 252, 253)",
+                    borderRadius: "12px",
+                    padding: "10px",
+                    marginBottom: "10px"
+                }}
                 elevation={3}>
-                {/* Function */}
+                {/* Button Add & Delete  */}
                 <Box sx={{ display: 'flex', justifyContent: "space-between", alignItems: 'center' }}>
                     <Box sx={{ flex: "1 1 0%" }}></Box>
                     <Box sx={{ flexShrink: 0 }}>
@@ -208,11 +228,23 @@ const EmployeePage = () => {
                                     "&.Mui-disabled": {
                                         backgroundColor: 'rgb(241, 243, 245)'
                                     }
-                                }} disableElevation size='small'
+                                }}
+                                disableElevation
+                                size='small'
+                                onClick={() => setOpenDialog(true)}
                                 startIcon={<DeleteOutlineIcon />}
                             >
                                 <Typography sx={{ fontSize: "14px", lineHeight: 1.35714 }} variant='body2'>Delete</Typography>
                             </Button>
+                            <CustomDialog
+                                loading={loading}
+                                onClickHandle={handleDeleteEmployee}
+                                onClose={() => setOpenDialog(false)}
+                                open={openDialog}
+                                request='delete'
+                                isContent={true}
+                                dialogContent='requestDelete'
+                            />
                         </Stack>
                     </Box>
                 </Box>
@@ -227,7 +259,7 @@ const EmployeePage = () => {
                                     numSelected={selected.length} />
                                 <TableBody>
                                     {listDataByPage.map((data: any, index: number) => {
-                                        const isItemSelected = isSelected(data.staff_id)
+                                        const isItemSelected = isSelected(data.id)
                                         return (
                                             <TableBodyEmployee data={data} key={index} isItemSelected={isItemSelected} selected={selected} setSelected={setSelected} />
                                         )

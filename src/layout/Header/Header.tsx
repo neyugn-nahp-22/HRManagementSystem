@@ -10,6 +10,7 @@ import { userDetail } from '../../services/authService';
 import ClearIcon from '@mui/icons-material/Clear';
 import Cookies from 'js-cookie';
 import { LoadingButton } from '@mui/lab';
+import CustomDialog from '../../components/CustomDialog/CustomDialog';
 
 
 const Header = () => {
@@ -147,90 +148,14 @@ const Header = () => {
                                     <Typography sx={{ fontSize: '16px', lineHeight: 1.5, letterSpacing: '-0.01em' }}>Staff ID:</Typography>
                                 </Box>
                                 <LoadingButtonCustom id='signOut' onClick={() => setOpenDialog(true)} />
-                                <Dialog
-                                    open={openDialog}
+                                <CustomDialog
+                                    loading={loading}
                                     onClose={() => setOpenDialog(false)}
-                                    PaperProps={{
-                                        sx: {
-                                            color: 'rgb(17, 24, 28)',
-                                            maxWidth: '444px',
-                                            borderRadius: '8px',
-                                            boxShadow: 'none'
-                                        }
-                                    }}
-                                >
-                                    <DialogTitle sx={{ fontWeight: 400, lineHeight: 1.38889, fontSize: '18px', padding: '20px 16px 4px 24px' }}>
-                                        <Box sx={{ display: "flex", justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <Typography sx={{ fontWeight: 500, fontSize: '24px', lineHeight: 1.375, letterSpacing: '-0.03em' }} variant='h4'>
-                                                <FormattedMessage id="askSignOut" />
-                                            </Typography>
-                                            <IconButton sx={{ color: 'rgb(17, 24, 28)' }} size='small'>
-                                                <ClearIcon />
-                                            </IconButton>
-                                        </Box>
-                                    </DialogTitle>
-                                    <DialogActions sx={{ justifyContent: 'center', padding: '24px' }}>
-                                        <Button sx={{
-                                            fontWeight: 400,
-                                            lineHeight: '1.71429',
-                                            textTransform: 'capitalize',
-                                            minWidth: '148px',
-                                            borderRadius: '6px',
-                                            fontSize: '16px',
-                                            height: '48px',
-                                            backgroundColor: 'rgb(241,243, 245)',
-                                            color: 'rgb(17, 24, 28)'
-                                        }}
-                                            size='large'
-                                            disableElevation
-                                            onClick={() => setOpenDialog(false)}
-                                        >
-                                            No
-                                        </Button>
-                                        {!loading ?
-                                            <Button
-                                                variant='contained'
-                                                sx={{
-                                                    fontWeight: 400,
-                                                    lineHeight: '1.71429',
-                                                    textTransform: 'capitalize',
-                                                    minWidth: '148px',
-                                                    borderRadius: '6px',
-                                                    fontSize: '16px',
-                                                    height: '48px',
-                                                    backgroundColor: 'rgb(0, 145, 255)',
-                                                    color: 'rgb(251, 253, 255)',
-                                                    "&:hover": {
-                                                        backgroundColor: 'rgb(0, 129, 241)',
-                                                        textDecoration: 'none'
-                                                    }
-                                                }}
-                                                size='large'
-                                                disableElevation
-                                                onClick={handleSignOut}
-                                            >
-                                                Yes
-                                            </Button>
-                                            :
-                                            <LoadingButton sx={{
-                                                fontWeight: 400,
-                                                lineHeight: '1.71429',
-                                                textTransform: 'capitalize',
-                                                minWidth: '148px',
-                                                borderRadius: '6px',
-                                                fontSize: '16px',
-                                                height: '48px',
-                                                backgroundColor: 'rgba(193, 200, 205, 0.24)',
-                                                color: 'rgb(17, 24, 28)'
-                                            }}
-                                                loading={loading}
-                                                variant="contained"
-                                                size='large'
-                                            >
-                                            </LoadingButton>
-                                        }
-                                    </DialogActions>
-                                </Dialog>
+                                    open={openDialog}
+                                    onClickHandle={handleSignOut}
+                                    request='requestLogout'
+                                    isContent={false}
+                                />
                                 <Link
                                     onClick={handleClickResetPassword}
                                     sx={{

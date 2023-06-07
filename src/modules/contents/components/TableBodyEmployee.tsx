@@ -21,8 +21,8 @@ const TableBodyEmployee = (props: TableBodyProps) => {
     const { data, isItemSelected, selected, setSelected } = props
 
     const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-        // console.log(name, 'name');
         // console.log(selected, 'selected');
+        // console.log(name, 'name');
         const selectedIndex = selected.indexOf(name);
         let newSelected: readonly string[] = [];
 
@@ -57,7 +57,7 @@ const TableBodyEmployee = (props: TableBodyProps) => {
             }}
             hover
             selected={isItemSelected}
-            onClick={(event) => { handleClick(event, data.staff_id) }}
+            onClick={(event) => { handleClick(event, data.id) }}
         >
             <TableCell sx={{
                 lineHeight: 1.35714,
