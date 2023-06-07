@@ -1,46 +1,38 @@
 export interface ICreateParams {
-  id: string;
-  name: string;
-  gender: string;
-  dob: string;
-  ktp_no: string;
-  nc_id: string;
-  contract_start_date: string;
-  type: string;
-  basic_salary: number;
-  audit_salary: number;
-  safety_insurance: number;
-  health_insurance: number;
-  meal_allowance: number;
-  card_number: string;
-  mother_name: string;
-  pob: string;
-  home_address_1: string;
-  home_address_2: string;
-  mobile_no: string;
-  tel_no: string;
-  marriage_id: string;
-  bank_account_no: string;
-  bank_name: string;
-  family_card_number: string;
-  safety_insurance_no: string;
-  health_insurance_no: string;
-  department_id: string;
-  position_id: string;
-  entitle_ot: number;
-  meal_allowance_paid: number;
-  operational_allowance_paid: number;
-  attendance_allowance_paid: number;
-  grade_id: string;
-  remark: string;
-  benefits: [];
-  shift: string;
-}
-
-export interface ICreateValidation {
-  name: string;
-  gender: number;
-  dob: any;
-  nc_id: string;
-  ktp_no: string;
+  id: string; //string
+  name: string; //string
+  gender: string; //string
+  dob: string; //string
+  ktp_no: string; //string
+  nc_id: string; //string
+  contract_start_date: string; //string
+  type: string; //string
+  basic_salary: number; //number
+  audit_salary: number; //number
+  safety_insurance: number; //number
+  health_insurance: number; //number
+  meal_allowance: number; //number
+  card_number: string; //string
+  mother_name: string; //string
+  pob: string; //string
+  home_address_1: string; //string
+  home_address_2: string; //string
+  mobile_no: string; //string
+  tel_no: string; //string
+  marriage_id: string; //string
+  bank_account_no: string; //string
+  bank_name: string; //string
+  family_card_number: string; //string
+  safety_insurance_no: string; //string
+  health_insurance_no: string; //string
+  department_id: string; //string
+  position_id: string; //string
+  entitle_ot: number; //number
+  meal_allowance_paid: number; //number
+  operational_allowance_paid: number; //number
+  attendance_allowance_paid: number; //number
+  grade_id: any; //string
+  remark: string; //string
+  benefits: any; // []
+  shift: string; //string
 }

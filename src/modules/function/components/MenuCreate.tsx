@@ -1,40 +1,71 @@
 import { LoadingButton, TabContext, TabPanel } from '@mui/lab'
 import { Box, Button, Paper, Stack, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import moment from 'moment'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormattedMessage } from 'react-intl'
+import { useHistory } from 'react-router'
 import CustomDivider from '../../../components/DividerComponent/DividerComponent'
+import toastMessage from '../../../components/toast/Toast'
+import { ROUTES } from '../../../configs/routes'
 import { ICreateParams } from '../../../models/employee'
+import { addEmployeeService, getGrade } from '../../../services/employeeService'
 import ContractInformation from '../layouts/ContractInformation'
 import EmploymentDetailsComponent from '../layouts/EmploymentDetails'
 import Other from '../layouts/Other'
 import PersonalInformation from '../layouts/PersonalInformation'
 import SalaryWages from '../layouts/SalaryWages'
-import { addEmployeeService } from '../../../services/employeeService'
-
-
 
 const MenuCreate = () => {
     const form = useForm<ICreateParams>({ mode: 'onBlur' })
     const { handleSubmit, formState: { errors } } = form
+
     const [activeTab, setActiveTab] = useState('0');
+    const [loading, setLoading] = useState<boolean>(false)
+    const history = useHistory()
 
     const handleTabChange = (event: React.SyntheticEvent, newTab: string) => {
         setActiveTab(newTab);
     };
 
-    const addEmployee = async (data: ICreateParams) => {
+    const [grade, setGrade] = useState<any>([])
+
+    useEffect(() => {
+        getGrade().then((data) => { setGrade(data.data.data) }).catch((err) => console.log(err))
+    }, [])
+
+    const addEmployee = async (formValues: ICreateParams) => {
+        const newFormValue = {
+            ...formValues,
+            grade_id: formValues.grade_id && Object.keys(formValues.grade_id).length !== 0 ? formValues.grade_id.value : null,
+            grade:
+                formValues.grade_id && Object.keys(formValues.grade_id).length !== 0
+                    ? grade.find((el: any) => el.id === formValues.grade_id.value)
+                    : null,
+            benefits: formValues.benefits.length !== 0 ? formValues.benefits.map((el: any) => el.value) : [],
+            contract_start_date: moment(formValues.contract_start_date).format('YYYY-MM-DD'),
+            dob: moment(formValues.dob).format('YYYY-MM-DD'),
+        };
         try {
-            const res = await addEmployeeService(data)
+            const res = await addEmployeeService(newFormValue)
             console.log(res);
+            toastMessage('success', 'Record added')
         } catch (error) {
             console.log(error);
         }
     }
 
     const onSubmit = (data: ICreateParams) => {
-        console.log(data);
-        addEmployee(data);
+        // console.log(data);
+        setLoading(true)
+        const delay = setTimeout(() => {
+            addEmployee(data);
+            setLoading(false)
+            history.push(ROUTES.employee)
+        }, 500)
+        return () => {
+            clearTimeout(delay)
+        }
     }
 
     const MENU_CREATE = [
@@ -82,7 +113,18 @@ const MenuCreate = () => {
                     <FormattedMessage id="employeeManagement" />
                 </Typography>
                 <LoadingButton
-                    sx={{ textTransform: 'none' }}
+                    sx={{
+                        fontWeight: 400,
+                        lineHeight: '1.71429',
+                        textTransform: 'capitalize',
+                        minWidth: '148px',
+                        borderRadius: '6px',
+                        fontSize: '16px',
+                        height: '48px',
+                        backgroundColor: 'rgba(193, 200, 205, 0.24)',
+                        color: 'rgb(17, 24, 28)'
+                    }}
+                    loading={loading}
                     variant='contained'
                     disableElevation
                     size='large'
