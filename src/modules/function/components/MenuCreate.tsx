@@ -40,9 +40,9 @@ const MenuCreate = () => {
             grade_id: formValues.grade_id && Object.keys(formValues.grade_id).length !== 0 ? formValues.grade_id.value : null,
             grade:
                 formValues.grade_id && Object.keys(formValues.grade_id).length !== 0
-                    ? grade.find((el: any) => el.id === formValues.grade_id.value)
+                    ? grade.find((item: any) => item.id === formValues.grade_id.value)
                     : null,
-            benefits: formValues.benefits.length !== 0 ? formValues.benefits.map((el: any) => el.value) : [],
+            benefits: formValues.benefits.length !== 0 ? formValues.benefits.map((item: any) => item.value) : [],
             contract_start_date: moment(formValues.contract_start_date).format('YYYY-MM-DD'),
             dob: moment(formValues.dob).format('YYYY-MM-DD'),
         };
