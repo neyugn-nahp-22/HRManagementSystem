@@ -37,7 +37,7 @@ const EmployeePage = () => {
     const [searchQuery, setSearchQuery] = useState<string>('')
     const [openDialog, setOpenDialog] = useState<boolean>(false)
     // console.log(listDataByPage, 'aaaaaa');
-    console.log(selected);
+    // console.log(selected);
     const isSelected = (staffID: string) => selected.indexOf(staffID) !== -1;
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {

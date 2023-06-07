@@ -28,6 +28,11 @@ const MenuCreate = () => {
         setActiveTab(newTab);
     };
 
+    const isPersonalInformationComplete = !errors || Object.keys(errors).length === 0;
+
+    console.log(isPersonalInformationComplete);
+
+
     const [grade, setGrade] = useState<any>([])
 
     useEffect(() => {
