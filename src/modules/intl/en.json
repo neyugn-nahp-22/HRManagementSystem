@@ -76,5 +76,6 @@
   "settings": "Settings",
   "requestLogout": "Do you wish to sign out?",
   "delete": "Delete",
-  "requestDelete": "Are you sure you want to delete?"
+  "requestDelete": "Are you sure you want to delete?",
+  "nik": "NIK"
 }

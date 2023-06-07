@@ -18,6 +18,9 @@ const Content = () => {
                     <Route exact path={ROUTES.add}>
                         <CreatePage />
                     </Route>
+                    <Route exact path={ROUTES.update}>
+                        <CreatePage />
+                    </Route>
                     <Route exact path={ROUTES.settings}>
                         <SettingPage />
                     </Route>

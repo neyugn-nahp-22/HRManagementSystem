@@ -11,5 +11,6 @@ export const ROUTES = {
   globalsetting: '/globalsetting',
   settings: '/settings',
   add: '/employee/create-or-update',
+  update: '/employee/create-or-update/:id',
   changePassword: '/settings/change-password',
 };

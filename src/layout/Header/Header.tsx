@@ -1,16 +1,14 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Avatar, Box, Button, Container, Dialog, DialogActions, DialogTitle, IconButton, Link, Paper, Popover, Toolbar, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, IconButton, Link, Paper, Popover, Toolbar, Typography } from '@mui/material';
+import Cookies from 'js-cookie';
 import { MouseEvent, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router';
+import CustomDialog from '../../components/CustomDialog/CustomDialog';
 import { FlagIcon, Logo } from '../../components/Icons';
 import LoadingButtonCustom from '../../components/LoadingButton/LoadingButton';
 import { ROUTES } from '../../configs/routes';
 import { userDetail } from '../../services/authService';
-import ClearIcon from '@mui/icons-material/Clear';
-import Cookies from 'js-cookie';
-import { LoadingButton } from '@mui/lab';
-import CustomDialog from '../../components/CustomDialog/CustomDialog';
 
 
 const Header = () => {

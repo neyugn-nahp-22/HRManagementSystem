@@ -15,11 +15,12 @@ interface Props {
     type: string,
     errors?: any,
     helperText?: any,
-    require: boolean
+    require: boolean,
+    value?: any
 }
 
 const DatePickerField = (props: Props) => {
-    const { label, control, errors, name, type, helperText, require } = props
+    const { label, control, errors, name, type, helperText, require, value } = props
 
     return (
         <Grid2 sx={{ flexFlow: "row wrap", alignItems: 'center', justifyContent: 'space-between' }} container spacing={1}>
@@ -44,6 +45,7 @@ const DatePickerField = (props: Props) => {
                             onChange={(date) => field.onChange(date)}
                             popperPlacement="bottom-start"
                             dateFormat='yyyy-MM-dd'
+                            value={value}
                             customInput={
                                 <TextField
                                     {...field}

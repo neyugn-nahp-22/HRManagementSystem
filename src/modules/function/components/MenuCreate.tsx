@@ -32,6 +32,7 @@ const MenuCreate = () => {
 
     useEffect(() => {
         getGrade().then((data) => { setGrade(data.data.data) }).catch((err) => console.log(err))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const addEmployee = async (formValues: ICreateParams) => {
@@ -117,12 +118,15 @@ const MenuCreate = () => {
                         fontWeight: 400,
                         lineHeight: '1.71429',
                         textTransform: 'capitalize',
-                        minWidth: '148px',
+                        minWidth: '78px',
                         borderRadius: '6px',
                         fontSize: '16px',
                         height: '48px',
-                        backgroundColor: 'rgba(193, 200, 205, 0.24)',
-                        color: 'rgb(17, 24, 28)'
+                        backgroundColor: 'rgb(0, 145, 255)',
+                        color: 'rgb(251, 253, 255)',
+                        "&:hover": {
+                            backgroundColor: 'rgb(0, 129, 241)'
+                        }
                     }}
                     loading={loading}
                     variant='contained'

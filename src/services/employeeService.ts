@@ -44,6 +44,22 @@ export const deleteEmployeeService = (id: any) => {
   });
 };
 
+export const getEmployeeById = (id: any) => {
+  return axios.get(`${API_PATHS.getEmployee}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+    },
+  });
+};
+
+export const updateEmployeeService = (data: any, id: number) => {
+  return axios.put(`${API_PATHS.getEmployee}/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+    },
+  });
+};
+
 export const searchEmployee = async (page: number, search: string) => {
   return axios.get(`${API_PATHS.getEmployee}?search=${search}&page=${page}`, {
     headers: {

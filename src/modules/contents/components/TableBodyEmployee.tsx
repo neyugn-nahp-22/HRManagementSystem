@@ -1,6 +1,8 @@
 import { Checkbox, TableCell, TableRow } from '@mui/material';
 import { SetStateAction } from 'react';
 import { TABLE_FIELD, Type } from '../../../assets/data/data';
+import { useHistory } from 'react-router';
+import { ROUTES } from '../../../configs/routes';
 
 const styleTableCell = {
     color: "rgb(104, 112, 118)",
@@ -19,6 +21,7 @@ interface TableBodyProps {
 
 const TableBodyEmployee = (props: TableBodyProps) => {
     const { data, isItemSelected, selected, setSelected } = props
+    const history = useHistory()
 
     const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
         // console.log(selected, 'selected');
@@ -42,6 +45,10 @@ const TableBodyEmployee = (props: TableBodyProps) => {
         setSelected(newSelected);
     };
 
+    const handleDoubleClick = () => {
+        history.push(`${ROUTES.add}/${data.id}`);
+    };
+
     return (
         <TableRow
             sx={{
@@ -58,6 +65,7 @@ const TableBodyEmployee = (props: TableBodyProps) => {
             hover
             selected={isItemSelected}
             onClick={(event) => { handleClick(event, data.id) }}
+            onDoubleClick={handleDoubleClick}
         >
             <TableCell sx={{
                 lineHeight: 1.35714,
