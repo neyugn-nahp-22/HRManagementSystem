@@ -13,6 +13,7 @@
   "requireEmail": "Please enter your email",
   "requireName": "Please input Name",
   "requireGender": "Please input Gender",
+  "requireType": "Please input Type",
   "requireKTP": "Please input KTP No",
   "requireNcid": "Please input National Card ID",
   "forgotPassWord": "Forgot Your Password?",

@@ -12,7 +12,7 @@ interface Props {
 }
 
 const ForgetPasswordForm = (props: Props) => {
-    const { loading, errorMessage } = props
+    const { loading } = props
     const { control, handleSubmit, formState: { errors } } = useForm<IForgotPasswordValidation>()
 
     const onSubmit = (data: IForgotPasswordValidation) => {

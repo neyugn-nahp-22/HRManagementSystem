@@ -42,31 +42,12 @@ export const Type = {
 
 export const GENDER = [
   {
-    id: 1,
+    id: 0,
     name: 'Male',
   },
   {
-    id: 2,
-    name: 'Female',
-  },
-];
-
-export const MARRIAGE_STATUS = [
-  {
-    name: 'N/A',
     id: 1,
-  },
-  {
-    name: 'Married with 1 kid',
-    id: 2,
-  },
-  {
-    name: 'Single',
-    id: 3,
-  },
-  {
-    name: 'Married',
-    id: 4,
+    name: 'Female',
   },
 ];
 
@@ -114,15 +95,15 @@ export const POSITION = [
 
 export const EMPLOYEE_TYPE = [
   {
-    id: 1,
+    id: 0,
     name: 'Permanent',
   },
   {
-    id: 2,
+    id: 1,
     name: 'Part-time',
   },
   {
-    id: 3,
+    id: 2,
     name: 'Contract',
   },
 ];

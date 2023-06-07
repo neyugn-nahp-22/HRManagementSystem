@@ -35,7 +35,7 @@ const InputFieldSalary = (props: Props) => {
                 <Controller
                     name={name}
                     control={control}
-                    defaultValue=''
+                    defaultValue={0}
                     rules={{ required: require }}
                     render={({ field }) => (
                         <TextField

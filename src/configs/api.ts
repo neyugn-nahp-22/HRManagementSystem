@@ -7,4 +7,7 @@ export const API_PATHS = {
   getEmployee: `${APIHost}/employee`,
   benefit: `${APIHost}/benefit`,
   grade: `${APIHost}/grade`,
+  department: `${APIHost}/department`,
+  position: `${APIHost}/position`,
+  marriage: `${APIHost}/marriage`,
 };

@@ -1,59 +1,71 @@
 import { LoadingButton, TabContext, TabPanel } from '@mui/lab'
 import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { FormattedMessage } from 'react-intl'
 import CustomDivider from '../../../components/DividerComponent/DividerComponent'
+import { ICreateParams } from '../../../models/employee'
 import ContractInformation from '../layouts/ContractInformation'
 import EmploymentDetailsComponent from '../layouts/EmploymentDetails'
 import Other from '../layouts/Other'
 import PersonalInformation from '../layouts/PersonalInformation'
 import SalaryWages from '../layouts/SalaryWages'
-import { ICreateParams } from '../../../models/employee'
-import { useForm } from 'react-hook-form'
+import { addEmployeeService } from '../../../services/employeeService'
 
 
 
 const MenuCreate = () => {
-    const { control, handleSubmit, formState: { errors } } = useForm<ICreateParams>({ mode: 'onBlur' })
-
+    const form = useForm<ICreateParams>({ mode: 'onBlur' })
+    const { handleSubmit, formState: { errors } } = form
     const [activeTab, setActiveTab] = useState('0');
+
     const handleTabChange = (event: React.SyntheticEvent, newTab: string) => {
         setActiveTab(newTab);
     };
 
+    const addEmployee = async (data: ICreateParams) => {
+        try {
+            const res = await addEmployeeService(data)
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const onSubmit = (data: ICreateParams) => {
         console.log(data);
+        addEmployee(data);
     }
 
     const MENU_CREATE = [
         {
             id: 0,
             name: "employeeInformation",
-            component: <PersonalInformation />,
+            component: <PersonalInformation form={form} />,
             label: "Personal Information"
         },
         {
             id: 1,
             name: "contractInformation",
-            component: <ContractInformation />,
+            component: <ContractInformation form={form} />,
             label: "Contract Information",
         },
         {
             id: 2,
             name: "employmentDetails",
-            component: <EmploymentDetailsComponent />,
+            component: <EmploymentDetailsComponent form={form} />,
             label: "Employment Details",
         },
         {
             id: 3,
             name: "salary&Wages",
-            component: <SalaryWages />,
+            component: <SalaryWages form={form} />,
             label: 'Salary & Wages'
         },
         {
             id: 4,
             name: "others",
-            component: <Other />,
+            component: <Other form={form} />,
             label: "Others",
         },
     ]
@@ -69,7 +81,16 @@ const MenuCreate = () => {
                 }}>
                     <FormattedMessage id="employeeManagement" />
                 </Typography>
-                <LoadingButton sx={{ textTransform: 'none' }} variant='contained' disableElevation size='large' onClick={handleSubmit(onSubmit)} >Add</LoadingButton>
+                <LoadingButton
+                    sx={{ textTransform: 'none' }}
+                    variant='contained'
+                    disableElevation
+                    size='large'
+                    onClick={handleSubmit(onSubmit)}
+                // disabled={errors ? true : false}
+                >
+                    Add
+                </LoadingButton>
             </Box>
             <TabContext value={activeTab}>
                 <Stack sx={{ flexFlow: 'row wrap', gap: '4px', marginBottom: "20px" }}>

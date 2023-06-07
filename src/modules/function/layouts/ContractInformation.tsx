@@ -1,35 +1,45 @@
 import { Box, Button, Divider, Stack, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import { useRef, useState } from 'react'
-import { Controller, UseFormHandleSubmit, useForm } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 import { FormattedMessage } from 'react-intl'
 import { EMPLOYEE_TYPE, TABLE_CONTRACT } from '../../../assets/data/data'
 import CustomDivider from '../../../components/DividerComponent/DividerComponent'
 import { UploadIcon } from '../../../components/Icons'
-import { ICreateParams } from '../../../models/employee'
 import InputField from '../components/CreateInputField'
 import SelectField from '../components/CreateSelectField'
 import DatePickerField from '../components/DatePickerComponent'
 
-const ContractInformation = () => {
-    const { control, handleSubmit, formState: { errors } } = useForm<ICreateParams>({ mode: "onBlur" })
-    const fileInputRef = useRef(null)
-    const [fileName, setFileName] = useState('')
+interface IContractInformation {
+    form?: any
+}
 
-    const handleFileUpload = (e: any) => {
-        const file = e.target.file[0];
-        console.log(file);
+const ContractInformation: React.FC<IContractInformation> = ({ form }) => {
+    const { control, handleSubmit, formState: { errors } } = form
+
+    const onSubmit = (data: IContractInformation) => {
+        console.log(data);
     }
+
     return (
         <Box sx={{ paddingLeft: "20px", paddingRight: "20px" }}>
-            <Stack sx={{ flexFlow: "column wrap", maxWidth: "400px", width: '100%', paddingBottom: '20px', gap: "10px" }} component='form'>
+            <Stack sx=
+                {{
+                    flexFlow: "column wrap",
+                    maxWidth: "400px",
+                    width: '100%',
+                    paddingBottom: '20px',
+                    gap: "10px"
+                }}
+                component='form'
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <DatePickerField
+                    label='dateStart'
+                    name='contract_start_date'
+                    type='text'
                     require={true}
                     control={control}
-                    label='dateStart'
-                    name="contract_start_date"
-                    type='text'
-                    errors={errors.contract_start_date}
-                    helperText={errors.contract_start_date ? <FormattedMessage id="requiredName" /> : ""}
+                    errors={errors.contract_start_date ? true : false}
+                    helperText={errors.contract_start_date ? "" : null}
                 />
                 <SelectField
                     label='Type'
@@ -39,8 +49,8 @@ const ContractInformation = () => {
                     control={control}
                     placeholder='Choose Type'
                     data={EMPLOYEE_TYPE}
-                    errors={errors.type}
-                    helperText="requireGender"
+                    errors={errors.type ? true : false}
+                    helperText="requireType"
                 />
             </Stack>
             <Stack sx={{ border: "1px solid rgb(223, 227, 230)", borderRadius: '6px' }}>
@@ -61,11 +71,9 @@ const ContractInformation = () => {
                         <InputField
                             label='contractName'
                             name="name"
-                            require={true}
+                            require={false}
                             control={control}
                             type='text'
-                            errors={errors.name ? true : false}
-                            helperText={errors.name ? '' : null}
                             InputProps={{ disableUnderline: true }}
                         />
                         <Stack sx={{ flexFlow: "row wrap", gap: '10px', justifyContent: 'space-between', marginTop: '12px' }}>
@@ -83,17 +91,13 @@ const ContractInformation = () => {
                                     <label className="">
                                         <FormattedMessage id="uploadFile" />
                                         <Controller
-                                            name="documents"
+                                            name="document"
                                             control={control}
-                                            rules={{ required: true }}
+                                            rules={{ required: false }}
                                             render={({ field }: any) => {
                                                 return (
                                                     <input
                                                         type="file"
-                                                        onChange={(e: any) => {
-                                                            setFileName(e.target.files[0].name);
-                                                            field.onChange(e.target.files[0]);
-                                                        }}
                                                         hidden
                                                     />
                                                 );

@@ -86,7 +86,6 @@ const SelectField = (props: Props) => {
                                     return data.find((item: any) => item.id === selected)?.name
                                 }}
                             >
-
                                 {data.map((item: any, index: number) => (
                                     <MenuItem
                                         sx={{

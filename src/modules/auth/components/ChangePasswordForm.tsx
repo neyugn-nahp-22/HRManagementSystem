@@ -17,6 +17,10 @@ const ChangePasswordForm = () => {
 
     const [showPassword, setShowPassword] = useState(false);
 
+    const onSubmit = (data: IChangePasswordValidation) => {
+        console.log(data);
+    }
+
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -58,7 +62,7 @@ const ChangePasswordForm = () => {
                 </Box>
                 <CustomDivider />
                 <Box sx={{ maxWidth: '272px', marginLeft: '10px', marginRight: '10px' }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }} component='form'>
+                    <Box onSubmit={handleSubmit(onSubmit)} sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }} component='form'>
                         <InputField
                             id='newPassword'
                             name='newPassword'

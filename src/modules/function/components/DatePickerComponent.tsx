@@ -36,7 +36,7 @@ const DatePickerField = (props: Props) => {
             <Grid2 xs={12} sm={12} md={7} lg={7.2} xl={8}>
                 <Controller
                     control={control}
-                    name="date"
+                    name={name}
                     rules={{ required: require }}
                     render={({ field }) => (
                         <DatePicker

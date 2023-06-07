@@ -1,31 +1,29 @@
 import { Box, Button, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { TABLE_OTHERS } from '../../../assets/data/data';
 import { UploadIcon } from '../../../components/Icons';
-import { ICreateParams } from '../../../models/employee';
 import { getBenefit, getGrade } from '../../../services/employeeService';
 import InputField from '../components/CreateInputField';
 import SelectField from '../components/CreateSelectField';
-import styles from './styles.module.scss'
-import classNames from 'classnames/bind';
+import styles from './styles.module.scss';
 
 const cx = classNames.bind(styles)
 
-interface IOtherParams {
-    grade_id: number | { value: number, label: string },
-    benefits: number[];
-    remark: string;
+interface IOther {
+    form?: any
 }
 
-const Other = () => {
-    const { control, handleSubmit, formState: { errors } } = useForm<ICreateParams>({ mode: "onBlur" })
+const Other: React.FC<IOther> = ({ form }) => {
+    const { control, handleSubmit } = form
     const [grade, setGrade] = useState([])
     const [benefit, setBenefit] = useState([])
 
-
+    const onSubmit = (data: IOther) => {
+        console.log(data);
+    }
 
     useEffect(() => {
         getBenefit().then((data) => {
@@ -36,8 +34,18 @@ const Other = () => {
     }, [])
     return (
         <>
-
-            <Box sx={{ display: 'flex', paddingLeft: '20px', paddingRight: '20px', flexDirection: 'column', gap: '10px', maxWidth: '560px' }} component='form'>
+            <Box
+                sx={{
+                    display: 'flex',
+                    paddingLeft: '20px',
+                    paddingRight: '20px',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    maxWidth: '560px'
+                }}
+                onSubmit={handleSubmit(onSubmit)}
+                component='form'
+            >
                 <SelectField
                     label='grade'
                     name="grade_id"

@@ -1,7 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_PATHS } from '../configs/api';
 import Cookies from 'js-cookie';
 import { ACCESS_TOKEN_KEY } from '../utils/constants';
+import { ICreateParams } from '../models/employee';
 
 export const getAllEmployee = () => {
   return axios.get(API_PATHS.getEmployee, {
@@ -17,6 +18,19 @@ export const getEmployeeByPage = async (page: number) => {
       Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
     },
   });
+};
+
+export const addEmployeeService = async (data: ICreateParams): Promise<AxiosResponse<any>> => {
+  try {
+    const res = await axios.post(API_PATHS.getEmployee, data, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+      },
+    });
+    return res.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
 };
 
 export const searchEmployee = async (page: number, search: string) => {
@@ -37,6 +51,30 @@ export const getBenefit = () => {
 
 export const getGrade = () => {
   return axios.get(API_PATHS.grade, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+    },
+  });
+};
+
+export const getDepartment = () => {
+  return axios.get(API_PATHS.department, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+    },
+  });
+};
+
+export const getPosition = () => {
+  return axios.get(API_PATHS.position, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+    },
+  });
+};
+
+export const getMarriage = () => {
+  return axios.get(API_PATHS.marriage, {
     headers: {
       Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
     },

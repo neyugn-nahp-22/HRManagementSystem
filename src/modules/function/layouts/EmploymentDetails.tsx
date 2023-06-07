@@ -1,15 +1,19 @@
 import { Box, Checkbox, FormControlLabel } from '@mui/material'
-import { useForm } from 'react-hook-form'
-import { DEPARTMENT, POSITION } from '../../../assets/data/data'
-import { ICreateParams, ICreateValidation } from '../../../models/employee'
+import { ChangeEvent, useEffect, useState } from 'react'
+import { getDepartment, getPosition } from '../../../services/employeeService'
 import SelectField from '../components/CreateSelectField'
-import { ChangeEvent, useState } from 'react'
 
-const EmploymentDetailsComponent = () => {
+interface IEmploymentDetails {
+    form?: any
+}
 
-    const { control, handleSubmit, formState: { errors } } = useForm<ICreateParams>({ mode: "onBlur" })
+const EmploymentDetails: React.FC<IEmploymentDetails> = ({ form }) => {
+
+    const { control, handleSubmit } = form
     const [checked, setChecked] = useState(false)
     const [checkPaid, setCheckPaid] = useState(false)
+    const [department, setDepartment] = useState([])
+    const [position, setPosition] = useState([])
 
     const handleChecked = (e: ChangeEvent<HTMLInputElement>) => {
         setChecked(e.target.checked)
@@ -18,6 +22,15 @@ const EmploymentDetailsComponent = () => {
     const handleCheckPaid = (e: ChangeEvent<HTMLInputElement>) => {
         setCheckPaid(e.target.checked)
     }
+
+    const onSubmit = (data: IEmploymentDetails) => {
+        console.log(data);
+    }
+
+    useEffect(() => {
+        getDepartment().then((data) => { setDepartment(data.data.data) }).catch((err) => console.log(err));
+        getPosition().then((data) => { setPosition(data.data.data) }).catch((err) => console.log(err))
+    }, [])
     return (
         <Box sx={{
             display: 'flex',
@@ -27,24 +40,25 @@ const EmploymentDetailsComponent = () => {
             gap: "10px"
         }}
             component='form'
+            onSubmit={handleSubmit(onSubmit)}
         >
             <SelectField
                 label='department'
-                name="department"
+                name="department_id"
                 require={false}
                 defaultValue={''}
                 control={control}
                 placeholder='Choose Department'
-                data={DEPARTMENT}
+                data={department}
             />
             <SelectField
                 label='position'
-                name="position"
+                name="position_id"
                 require={false}
                 defaultValue={''}
                 control={control}
                 placeholder='Choose Position'
-                data={POSITION}
+                data={position}
             />
             <FormControlLabel control={<Checkbox color='success' checked={checked} onChange={handleChecked} />} labelPlacement='end' label="Entitled OT"></FormControlLabel>
             <FormControlLabel control={<Checkbox color='success' checked={checkPaid} onChange={handleCheckPaid} />} labelPlacement='end' label="Meal Allowance Paid"></FormControlLabel>
@@ -54,4 +68,4 @@ const EmploymentDetailsComponent = () => {
     )
 }
 
-export default EmploymentDetailsComponent
+export default EmploymentDetails

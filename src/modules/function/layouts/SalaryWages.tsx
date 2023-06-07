@@ -1,20 +1,19 @@
 import { Box, InputAdornment, Typography } from '@mui/material'
-import { useForm } from 'react-hook-form'
 import InputFieldSalary from '../components/InputFieldSalary'
 
-interface ISalaryParams {
-    audit_salary: number | '';
-    basic_salary: number | '';
-    health_insurance: number | '';
-    meal_allowance: number | '';
-    safety_insurance: number | '';
+interface ISalaryWages {
+    form?: any
 }
 
-const SalaryWages = () => {
-    const { control, handleSubmit, formState: { errors } } = useForm<ISalaryParams>()
+const SalaryWages: React.FC<ISalaryWages> = ({ form }) => {
+    const { control, handleSubmit} = form
+
+    const onSubmit = (data: ISalaryWages) => {
+        console.log(data);
+    }
 
     return (
-        <Box sx={{ padding: "0px 20px 20px", maxWidth: '560px' }} component='form'>
+        <Box onSubmit={handleSubmit(onSubmit)} sx={{ padding: "0px 20px 20px", maxWidth: '560px' }} component='form'>
             <InputFieldSalary
                 control={control}
                 label='basicSalary'

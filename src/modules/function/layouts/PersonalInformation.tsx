@@ -1,17 +1,27 @@
 import { Box, Stack } from '@mui/material'
-import { useForm } from 'react-hook-form'
+import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { GENDER, MARRIAGE_STATUS } from '../../../assets/data/data'
-import { ICreateParams } from '../../../models/employee'
+import { GENDER } from '../../../assets/data/data'
+import { getMarriage } from '../../../services/employeeService'
 import InputField from '../components/CreateInputField'
 import SelectField from '../components/CreateSelectField'
 import DatePickerField from '../components/DatePickerComponent'
 
-const PersonalInformation = () => {
+interface IPersonalInformation {
+    form?: any
+}
+const PersonalInformation: React.FC<IPersonalInformation> = ({ form }) => {
 
-    const { control, handleSubmit, formState: { errors } } = useForm<ICreateParams>({ mode: "onBlur" })
+    const { control, handleSubmit, formState: { errors } } = form
+    const [marriage, setMarriage] = useState([])
 
-    const onSubmit = (data: ICreateParams) => { }
+    const onSubmit = (data: IPersonalInformation) => {
+        console.log(data);
+    }
+
+    useEffect(() => {
+        getMarriage().then((data) => { setMarriage(data.data.data) }).catch((err) => console.log(err))
+    }, [])
 
     return (
         <Box
@@ -47,7 +57,7 @@ const PersonalInformation = () => {
                 />
                 <InputField
                     label='motherName'
-                    name="motherName"
+                    name="mother_name"
                     require={false}
                     control={control}
                     type='text'
@@ -60,11 +70,11 @@ const PersonalInformation = () => {
                     require={true}
                     control={control}
                     errors={errors.dob ? true : false}
-                    helperText={errors.dob ? <FormattedMessage id="requireName" /> : null}
+                    helperText={errors.dob ? '' : null}
                 />
                 <InputField
                     label='placeofbirth'
-                    name="placeofbirth"
+                    name="pob"
                     require={false}
                     control={control}
                     type='text'
@@ -92,7 +102,7 @@ const PersonalInformation = () => {
                 />
                 <InputField
                     label='homeAddress1'
-                    name="homeAddress1"
+                    name="home_address_1"
                     require={false}
                     control={control}
                     type='text'
@@ -100,7 +110,7 @@ const PersonalInformation = () => {
                 />
                 <InputField
                     label='homeAddress2'
-                    name="homeAddress2"
+                    name="home_address_2"
                     require={false}
                     control={control}
                     type='text'
@@ -110,7 +120,7 @@ const PersonalInformation = () => {
             <Stack sx={{ flex: "1 1 0%", paddingLeft: "20px", paddingRight: "20px", gap: "10px" }}>
                 <InputField
                     label='mobileNo'
-                    name="mobileNo"
+                    name="mobile_no"
                     require={false}
                     control={control}
                     type='text'
@@ -118,7 +128,7 @@ const PersonalInformation = () => {
                 />
                 <InputField
                     label='TelNo'
-                    name="TelNo"
+                    name="tel_no"
                     require={false}
                     control={control}
                     type='text'
@@ -126,16 +136,16 @@ const PersonalInformation = () => {
                 />
                 <SelectField
                     label='marriageStatus'
-                    name="marriageStatus"
+                    name="marriage_id"
                     require={false}
                     defaultValue={''}
                     control={control}
                     placeholder='Choose Marriage Status'
-                    data={MARRIAGE_STATUS}
+                    data={marriage}
                 />
                 <InputField
                     label='bankCardNo'
-                    name="bankCardNo"
+                    name="card_number"
                     require={false}
                     control={control}
                     type='text'
@@ -143,7 +153,7 @@ const PersonalInformation = () => {
                 />
                 <InputField
                     label='bankAccountNo'
-                    name="bankAccountNo"
+                    name="bank_account_no"
                     require={false}
                     control={control}
                     type='text'
@@ -151,7 +161,7 @@ const PersonalInformation = () => {
                 />
                 <InputField
                     label='bankName'
-                    name="bankName"
+                    name="bank_name"
                     require={false}
                     control={control}
                     type='text'
@@ -159,7 +169,7 @@ const PersonalInformation = () => {
                 />
                 <InputField
                     label='familyCardNumber'
-                    name="familyCardNumber"
+                    name="family_card_number"
                     require={false}
                     control={control}
                     type='text'
@@ -167,7 +177,7 @@ const PersonalInformation = () => {
                 />
                 <InputField
                     label='safetyInsuranceNo'
-                    name="safetyInsuranceNo"
+                    name="safety_insurance_no"
                     require={false}
                     control={control}
                     type='text'
@@ -175,7 +185,7 @@ const PersonalInformation = () => {
                 />
                 <InputField
                     label='healthInsuranceNo'
-                    name="healthInsuranceNo"
+                    name="health_insurance_no"
                     require={false}
                     control={control}
                     type='text'
