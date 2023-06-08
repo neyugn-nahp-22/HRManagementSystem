@@ -10,11 +10,11 @@ import toastMessage from '../../../components/toast/Toast'
 import { ROUTES } from '../../../configs/routes'
 import { ICreateParams } from '../../../models/employee'
 import { addEmployeeService, getEmployeeById, getGrade, updateEmployeeService } from '../../../services/employeeService'
-import ContractInformation from '../layouts/ContractInformation'
-import EmploymentDetailsComponent from '../layouts/EmploymentDetails'
-import Other from '../layouts/Other'
-import PersonalInformation from '../layouts/PersonalInformation'
-import SalaryWages from '../layouts/SalaryWages'
+import ContractInformation from '../tabs/ContractInformation'
+import EmploymentDetailsComponent from '../tabs/EmploymentDetails'
+import Other from '../tabs/Other'
+import PersonalInformation from '../tabs/PersonalInformation'
+import SalaryWages from '../tabs/SalaryWages'
 
 const MenuCreate = () => {
     const form = useForm<ICreateParams>({ mode: 'onBlur' })

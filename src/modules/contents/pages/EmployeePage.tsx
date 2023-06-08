@@ -14,7 +14,7 @@ import classNames from 'classnames/bind'
 import CustomDialog from '../../../components/CustomDialog/CustomDialog'
 import CustomDivider from '../../../components/DividerComponent/DividerComponent'
 import toastMessage from '../../../components/toast/Toast'
-import styles from '../../function/layouts/styles.module.scss'
+import styles from '../../function/tabs/styles.module.scss'
 import TableHeadEmployee from '../components/TableHeadEmployee'
 
 const cx = classNames.bind(styles)
