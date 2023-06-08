@@ -1,6 +1,5 @@
 import { TextField, Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
-import React from 'react'
 import { Controller } from 'react-hook-form'
 import { FormattedMessage } from 'react-intl'
 
@@ -15,7 +14,7 @@ interface Props {
     require: boolean,
     hidden?: boolean,
     multiline?: boolean,
-    rows?: number
+    rows?: number,
 }
 
 const InputField = (props: Props) => {
@@ -37,7 +36,7 @@ const InputField = (props: Props) => {
                 <Controller
                     name={name}
                     control={control}
-                    defaultValue=''
+                    defaultValue={''}
                     rules={{ required: require }}
                     render={({ field }) => (
                         <TextField

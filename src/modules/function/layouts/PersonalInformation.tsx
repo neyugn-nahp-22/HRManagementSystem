@@ -8,9 +8,10 @@ import SelectField from '../components/CreateSelectField'
 import DatePickerField from '../components/DatePickerComponent'
 
 interface IPersonalInformation {
-    form?: any
+    form?: any,
+    values?: any
 }
-const PersonalInformation: React.FC<IPersonalInformation> = ({ form }) => {
+const PersonalInformation: React.FC<IPersonalInformation> = ({ form, values }) => {
 
     const { control, handleSubmit, formState: { errors } } = form
     const [marriage, setMarriage] = useState([])

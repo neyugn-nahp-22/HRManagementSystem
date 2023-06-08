@@ -4,12 +4,12 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormattedMessage } from 'react-intl'
-import { useHistory } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 import CustomDivider from '../../../components/DividerComponent/DividerComponent'
 import toastMessage from '../../../components/toast/Toast'
 import { ROUTES } from '../../../configs/routes'
 import { ICreateParams } from '../../../models/employee'
-import { addEmployeeService, getGrade } from '../../../services/employeeService'
+import { addEmployeeService, getEmployeeById, getGrade, updateEmployeeService } from '../../../services/employeeService'
 import ContractInformation from '../layouts/ContractInformation'
 import EmploymentDetailsComponent from '../layouts/EmploymentDetails'
 import Other from '../layouts/Other'
@@ -23,21 +23,31 @@ const MenuCreate = () => {
     const [activeTab, setActiveTab] = useState('0');
     const [loading, setLoading] = useState<boolean>(false)
     const history = useHistory()
+    const { id } = useParams<any>()
+    const [employeeById, setEmployeeById] = useState<any>([])
+    // console.log(employeeById, 'data');
+    // console.log(id);
+
 
     const handleTabChange = (event: React.SyntheticEvent, newTab: string) => {
         setActiveTab(newTab);
     };
 
+    useEffect(() => {
+        getEmployeeById(id).then((data) => { setEmployeeById(data.data.data) }).catch((err) => console.log(err))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     const isPersonalInformationComplete = !errors || Object.keys(errors).length === 0;
 
     console.log(isPersonalInformationComplete);
-
 
     const [grade, setGrade] = useState<any>([])
 
     useEffect(() => {
         getGrade().then((data) => { setGrade(data.data.data) }).catch((err) => console.log(err))
         // eslint-disable-next-line react-hooks/exhaustive-deps
+
     }, [])
 
     const addEmployee = async (formValues: ICreateParams) => {
@@ -53,7 +63,7 @@ const MenuCreate = () => {
             dob: moment(formValues.dob).format('YYYY-MM-DD'),
         };
         try {
-            const res = await addEmployeeService(newFormValue)
+            const res = !id ? await addEmployeeService(newFormValue) : await updateEmployeeService(newFormValue, id)
             console.log(res);
             toastMessage('success', 'Record added')
         } catch (error) {
@@ -78,7 +88,7 @@ const MenuCreate = () => {
         {
             id: 0,
             name: "employeeInformation",
-            component: <PersonalInformation form={form} />,
+            component: <PersonalInformation values={employeeById} form={form} />,
             label: "Personal Information"
         },
         {
