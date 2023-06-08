@@ -35,6 +35,7 @@ const Header = () => {
 
     const handleClickResetPassword = () => {
         history.push(ROUTES.changePassword)
+        setAnchorEl(null)
     }
 
     // console.log(detailUser.username, 'detailUser');

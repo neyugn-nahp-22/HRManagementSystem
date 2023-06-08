@@ -28,6 +28,7 @@
   "newPassword": "New Password",
   "confirmPassword": "Confirm Password",
   "confirm": "Confirm",
+  "confirmSendOTP": "Confirm & Send OTP",
   "changePassword": "Change Password",
   "notMatchPass": "The passwords do not match",
   "employeeInformation": "Employee Information",

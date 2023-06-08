@@ -1,5 +1,6 @@
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { LoadingButton } from '@mui/lab';
 import { Box, Button, Container, FilledInput, FormHelperText, IconButton, Link, MenuItem, Paper, Select, Stack, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { useEffect, useState } from 'react';
@@ -8,8 +9,8 @@ import { FormattedMessage } from 'react-intl';
 import InputField from '../../../components/InputField/InputField';
 import { ROUTES } from '../../../configs/routes';
 import { ILoginParams, ILoginValidation } from '../../../models/auth';
-import { LoadingButton } from '@mui/lab';
 import { getAllCompany } from '../../../services/authService';
+import { useHistory } from 'react-router';
 
 interface Props {
     onLogin(values: ILoginParams): void;
@@ -17,11 +18,9 @@ interface Props {
     errorMessage: string
 }
 
-
-
 const LoginForm = (props: Props) => {
     const { onLogin, loading } = props
-
+    const history = useHistory()
     const [showPassword, setShowPassword] = useState(false);
     const [company, setCompany] = useState<any>([])
     // console.log(company.map(item => item.name));
@@ -53,6 +52,12 @@ const LoginForm = (props: Props) => {
     const handleMouseDownPassword = (event: any) => {
         event.preventDefault();
     };
+
+    const handleClickToForgotPassword = () => {
+        history.push(ROUTES.forgotPassword)
+    }
+
+
 
     return (
         <Container sx={{ flex: '1 1 0%', display: 'flex', flexDirection: 'column' }} component='main' maxWidth="lg">
@@ -92,14 +97,15 @@ const LoginForm = (props: Props) => {
                                 disableUnderline: true,
                                 type: showPassword ? 'text' : 'password',
                                 endAdornment: (
-                                    "" ?
+                                    control ?
                                         <IconButton
                                             size='small'
                                             onClick={handleClickShowPassword}
                                             onMouseDown={handleMouseDownPassword}
                                         >
                                             {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                        </IconButton> : ""
+                                        </IconButton>
+                                        : null
                                 ),
                             }}
                         />
@@ -251,11 +257,12 @@ const LoginForm = (props: Props) => {
                                         fontSize: '14px',
                                         color: 'rgb(0, 145, 255)',
                                         margin: '16px 0px 0px',
+                                        cursor: 'pointer',
                                         "&:hover": {
                                             textDecoration: "underline"
                                         }
                                     }}
-                                    href={ROUTES.forgotPassword}
+                                    onClick={handleClickToForgotPassword}
                                     underline='none'
                                     variant='body2'>
                                     <FormattedMessage id='forgotPassWord' />

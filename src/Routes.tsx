@@ -28,8 +28,8 @@ export const Routes = (props: Props) => {
         <Suspense fallback={<Loading />}>
             <Switch location={location}>
                 <PublicRoute path={ROUTES.login} component={LoginPage} />
-                <ProtectedRoute path={ROUTES.home} component={HomePage} />
                 <PublicRoute path={ROUTES.forgotPassword} component={ForgotPage} />
+                <ProtectedRoute path={ROUTES.home} component={HomePage} />
                 <ProtectedRoute path={ROUTES.employee} component={EmployeePape} />
                 <ProtectedRoute path={ROUTES.add} component={CreatePage} />
                 <ProtectedRoute path={ROUTES.changePassword} component={ChangePasswordPage} />
