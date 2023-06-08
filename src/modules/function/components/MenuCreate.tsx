@@ -65,7 +65,7 @@ const MenuCreate = () => {
         try {
             const res = !id ? await addEmployeeService(newFormValue) : await updateEmployeeService(newFormValue, id)
             console.log(res);
-            toastMessage('success', 'Record added')
+            !id ? toastMessage('success', 'Record added') : toastMessage('success', 'Change saved')
         } catch (error) {
             console.log(error);
         }
