@@ -3,7 +3,8 @@ import { FilledInput, FormHelperText, MenuItem, Select, Typography } from '@mui/
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Controller } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
-
+import { GENDER } from '../../../assets/data/data';
+import { EMPLOYEE_TYPE } from '../../../assets/data/data';
 
 interface Props {
     label: string,
@@ -79,13 +80,14 @@ const SelectField = (props: Props) => {
                                         }
                                     }
                                 }}
-                                renderValue={(selected) => {
-                                    if (!selected) {
-                                        return <Typography>{placeholder}</Typography>
-                                    }
-                                    return data.find((item: any) => item.id === selected)?.name
-                                }}
+                            // renderValue={(selected) => {
+                            //     if (!selected) {
+                            //         return <Typography>{placeholder}</Typography>
+                            //     }
+                            //     return data.find((item: any) => item.id === selected)?.name
+                            // }}
                             >
+                                <MenuItem sx={{ display: data === GENDER || data === EMPLOYEE_TYPE ? 'none' : null }} value="">{placeholder}</MenuItem>
                                 {data.map((item: any, index: number) => (
                                     <MenuItem
                                         sx={{

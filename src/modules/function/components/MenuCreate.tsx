@@ -15,6 +15,7 @@ import EmploymentDetailsComponent from '../tabs/EmploymentDetails'
 import Other from '../tabs/Other'
 import PersonalInformation from '../tabs/PersonalInformation'
 import SalaryWages from '../tabs/SalaryWages'
+import { WarningIcon } from '../../../components/Icons'
 
 const MenuCreate = () => {
     const form = useForm<ICreateParams>({ mode: 'onBlur' })
@@ -150,7 +151,7 @@ const MenuCreate = () => {
                     onClick={handleSubmit(onSubmit)}
                 // disabled={errors ? true : false}
                 >
-                    Add
+                    {id ? "Save change" : "Add"}
                 </LoadingButton>
             </Box>
             <TabContext value={activeTab}>
@@ -160,22 +161,23 @@ const MenuCreate = () => {
                             key={item.id}
                             disableElevation
                             variant={activeTab === item.id.toString() ? "contained" : 'text'}
+                            endIcon={!isPersonalInformationComplete ? item.label === "Personal Information" || item.label === "Contract Information" ? <WarningIcon /> : null : null}
                             sx={activeTab === item.id.toString() ? {
                                 boxShadow: 'none',
-                                backgroundColor: "rgb(0, 145, 255)",
+                                backgroundColor: isPersonalInformationComplete ? "rgb(0, 145, 255)" : item.label === 'Personal Information' || item.label === "Contract Information" ? 'rgb(229, 72, 77)' : null,
                                 fontWeight: 400,
                                 minWidth: "180px",
                                 borderRadius: "6px",
                                 height: "42px",
                                 textTransform: "capitalize",
                                 "&:hover": {
-                                    backgroundColor: "rgb(0, 129, 241)"
+                                    backgroundColor: isPersonalInformationComplete ? "rgb(0, 129, 241)" : item.label === 'Personal Information' || item.label === "Contract Information" ? 'rgb(229, 72, 77)' : null
                                 }
                             } : {
                                 textTransform: "capitalize",
-                                color: "rgb(0, 145, 255)",
+                                color: isPersonalInformationComplete ? "rgb(0, 145, 255)" : item.label === 'Personal Information' || item.label === "Contract Information" ? 'rgb(229, 72, 77)' : null,
                                 height: "42px",
-                                backgroundColor: "rgb(237, 246, 255)",
+                                backgroundColor: isPersonalInformationComplete ? "rgb(237, 246, 255)" : item.label === 'Personal Information' || item.label === "Contract Information" ? 'rgb(255, 239, 239)' : null,
                                 fontWeight: 400,
                                 minWidth: "180px",
                                 borderRadius: "6px"
@@ -211,7 +213,7 @@ const MenuCreate = () => {
                     )
                 })
                 }
-            </TabContext>
+            </TabContext >
         </>
     );
 }
