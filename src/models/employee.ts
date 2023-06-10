@@ -5,7 +5,9 @@ export interface ICreateParams {
   dob: string; //string
   ktp_no: string; //string
   nc_id: string; //string
-  contract_start_date: string; //string
+  contract_start_date: string; //string;
+  contract_date: string;
+  document: File | undefined;
   type: string; //string
   basic_salary: number; //number
   audit_salary: number; //number

@@ -86,7 +86,7 @@ const PersonalInformation: React.FC<IPersonalInformation> = ({ form, values }) =
                     name="ktp_no"
                     require={true}
                     control={control}
-                    type='text'
+                    type='number'
                     errors={errors.ktp_no ? true : false}
                     helperText={errors.ktp_no ? <FormattedMessage id="requireKTP" /> : null}
                     InputProps={{ disableUnderline: true }}
@@ -96,7 +96,7 @@ const PersonalInformation: React.FC<IPersonalInformation> = ({ form, values }) =
                     name="nc_id"
                     require={true}
                     control={control}
-                    type='text'
+                    type='number'
                     errors={errors.nc_id ? true : false}
                     helperText={errors.nc_id ? <FormattedMessage id="requireNcid" /> : null}
                     InputProps={{ disableUnderline: true }}

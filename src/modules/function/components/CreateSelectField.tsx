@@ -80,12 +80,6 @@ const SelectField = (props: Props) => {
                                         }
                                     }
                                 }}
-                            // renderValue={(selected) => {
-                            //     if (!selected) {
-                            //         return <Typography>{placeholder}</Typography>
-                            //     }
-                            //     return data.find((item: any) => item.id === selected)?.name
-                            // }}
                             >
                                 <MenuItem sx={{ display: data === GENDER || data === EMPLOYEE_TYPE ? 'none' : null }} value="">{placeholder}</MenuItem>
                                 {data.map((item: any, index: number) => (

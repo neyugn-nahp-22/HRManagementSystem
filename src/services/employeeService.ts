@@ -84,6 +84,14 @@ export const getGrade = () => {
   });
 };
 
+export const getBenefitByIdGrade = (id: any) => {
+  return axios.get(`${API_PATHS.benefit}?grade_id=${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+    },
+  });
+};
+
 export const getDepartment = () => {
   return axios.get(API_PATHS.department, {
     headers: {

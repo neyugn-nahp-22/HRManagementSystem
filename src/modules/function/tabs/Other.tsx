@@ -1,7 +1,9 @@
-import { Box, Button, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Box, Button, Chip, FilledInput, MenuItem, Select, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
+import { Controller } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { TABLE_OTHERS } from '../../../assets/data/data';
 import { UploadIcon } from '../../../components/Icons';
@@ -9,6 +11,7 @@ import { getBenefit, getGrade } from '../../../services/employeeService';
 import InputField from '../components/CreateInputField';
 import SelectField from '../components/CreateSelectField';
 import styles from './styles.module.scss';
+
 
 const cx = classNames.bind(styles)
 
@@ -20,10 +23,15 @@ const Other: React.FC<IOther> = ({ form }) => {
     const { control, handleSubmit } = form
     const [grade, setGrade] = useState([])
     const [benefit, setBenefit] = useState([])
+    const [benefitById, setBenefitById] = useState([])
 
+    // console.log(benefitById);
+
+    // console.log(benefit);
     const onSubmit = (data: IOther) => {
         console.log(data);
     }
+
 
     useEffect(() => {
         getBenefit().then((data) => {
@@ -46,21 +54,106 @@ const Other: React.FC<IOther> = ({ form }) => {
                 onSubmit={handleSubmit(onSubmit)}
                 component='form'
             >
-                <SelectField
-                    label='grade'
-                    name="grade_id"
-                    require={false}
-                    defaultValue={''}
-                    control={control}
-                    placeholder=''
-                    data={grade}
-                />
+                <Grid2 sx={{ flexFlow: "row wrap", alignItems: 'center', justifyContent: 'space-between' }} container spacing={1}>
+                    <Grid2 xs={12} sm={12} md={5} lg={4.8} xl={4}>
+                        <Typography sx={{ display: 'flex', flexWrap: "wrap" }}>
+                            <FormattedMessage id='grade' />
+                        </Typography>
+                    </Grid2>
+                    <Grid2 xs={12} sm={12} md={7} lg={7.2} xl={8}>
+                        <Controller
+                            name='grade_id'
+                            control={control}
+                            defaultValue={''}
+                            rules={{ required: false }}
+                            render={({ field }: any) => (
+                                <>
+                                    <Select
+                                        {...field}
+                                        displayEmpty
+                                        variant='filled'
+                                        input={<FilledInput />}
+                                        fullWidth
+                                        disableUnderline
+                                        IconComponent={KeyboardArrowDownIcon}
+                                        sx={{
+                                            backgroundColor: "rgb(241, 243, 245)",
+                                            borderRadius: '6px',
+                                            overflow: 'hidden',
+                                            ".MuiSelect-select": {
+                                                padding: '12px',
+                                                ".css-ahj2mt-MuiTypography-root": {
+                                                    color: "rgb(104, 112, 118)"
+                                                }
+                                            },
+                                            ".Mui-error": {
+                                                border: "1px solid rgb(243, 174, 175)",
+                                                backgroundColor: 'rgb(255, 239, 239)',
+                                                "&:hover": {
+                                                    border: "1px solid rgb(243, 174, 175)",
+                                                    backgroundColor: 'rgb(255, 239, 239)',
+                                                }
+                                            },
+                                            ".MuiFormHelperText-root": {
+                                                border: 'none',
+                                                backgroundColor: "transparent",
+                                                "&:hover": {
+                                                    border: 'none',
+                                                    backgroundColor: "transparent",
+                                                }
+                                            }
+                                        }}
+                                    >
+                                        <MenuItem value=""></MenuItem>
+                                        {grade.map((item: any, index: number) => (
+                                            <MenuItem
+                                                sx={{
+                                                    padding: '8px 0px',
+                                                    "&.MuiButtonBase-root": {
+                                                        padding: '8px 16px',
+                                                        borderRadius: '6px',
+                                                        margin: '2px 0px 0px',
+                                                        "&:hover": {
+                                                            color: 'rgb(48, 164, 108)',
+                                                            backgroundColor: 'rgba(193, 200, 205, 0.08)',
+                                                        }
+                                                    },
+                                                    '&.Mui-selected': {
+                                                        backgroundColor: "rgb(233, 249, 238)",
+                                                        color: "rgb(48, 164, 108)",
+                                                        "&:hover": {
+                                                            backgroundColor: 'rgb(221, 243, 228)'
+                                                        }
+                                                    },
+                                                    '&.Mui-focusVisible': {
+                                                        backgroundColor: "transparent",
+                                                    }
+                                                }}
+                                                key={index} onClick={() => setBenefitById(item.benefits.map((el: any) => el.name))} value={item.id}>{item.name}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </>
+                            )}
+                        />
+                    </Grid2>
+                </Grid2 >
+                {benefitById.length !== 0 ?
+                    <Grid2 xs={1} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Grid2 xs={12} sm={12} md={5} lg={4.8} xl={4}></Grid2>
+                        <Grid2 xs={12} sm={12} md={7} lg={7.2} xl={8}>
+                            {benefitById.map((item: any, index: number) => (
+                                <Chip key={index} label={item} sx={{ height: '24px', borderRadius: '6px', margin: '0px 5px', color: 'rgb(104, 112, 118)', backgroundColor: 'rgb(230, 232, 235)' }} />
+                            ))}
+                        </Grid2>
+                    </Grid2> : null
+                }
                 <SelectField
                     label='benefit'
                     name="benefits"
                     require={false}
-                    defaultValue={''}
+                    defaultValue={[]}
                     control={control}
+                    multiple={true}
                     placeholder=''
                     data={benefit}
                 />

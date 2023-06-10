@@ -78,5 +78,6 @@
   "requestLogout": "Do you wish to sign out?",
   "delete": "Delete",
   "requestDelete": "Are you sure you want to delete?",
+  "demo": "demo",
   "nik": "NIK"
 }

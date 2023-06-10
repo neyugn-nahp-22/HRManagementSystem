@@ -132,7 +132,7 @@ const EmployeePage = () => {
             setOpenDialog(false)
             toastMessage('success', 'Success')
             setSelected([])
-            await getDataByPage(currentPage)
+            searchQuery ? await getDataSearch(currentPage, searchQuery) : await getDataByPage(currentPage)
         } catch (error) {
             console.log(error);
         }

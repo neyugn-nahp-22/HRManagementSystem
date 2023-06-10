@@ -16,11 +16,11 @@ import Other from '../tabs/Other'
 import PersonalInformation from '../tabs/PersonalInformation'
 import SalaryWages from '../tabs/SalaryWages'
 import { WarningIcon } from '../../../components/Icons'
+import DemoTab from '../tabs/DemoTab'
 
 const MenuCreate = () => {
     const form = useForm<ICreateParams>({ mode: 'onBlur' })
     const { handleSubmit, formState: { errors } } = form
-
     const [activeTab, setActiveTab] = useState('0');
     const [loading, setLoading] = useState<boolean>(false)
     const history = useHistory()
@@ -34,10 +34,10 @@ const MenuCreate = () => {
         setActiveTab(newTab);
     };
 
-    useEffect(() => {
-        getEmployeeById(id).then((data) => { setEmployeeById(data.data.data) }).catch((err) => console.log(err))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    // useEffect(() => {
+    //     getEmployeeById(id).then((data) => { setEmployeeById(data.data.data) }).catch((err) => console.log(err))
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [])
 
     const isPersonalInformationComplete = !errors || Object.keys(errors).length === 0;
 
@@ -48,7 +48,6 @@ const MenuCreate = () => {
     useEffect(() => {
         getGrade().then((data) => { setGrade(data.data.data) }).catch((err) => console.log(err))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-
     }, [])
 
     const addEmployee = async (formValues: ICreateParams) => {
@@ -115,6 +114,12 @@ const MenuCreate = () => {
             name: "others",
             component: <Other form={form} />,
             label: "Others",
+        },
+        {
+            id: 5,
+            name: "demo",
+            component: <DemoTab />,
+            label: "DemoTab",
         },
     ]
     return (
