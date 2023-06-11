@@ -41,8 +41,6 @@ const MenuCreate = () => {
 
     const isPersonalInformationComplete = !errors || Object.keys(errors).length === 0;
 
-    console.log(isPersonalInformationComplete);
-
     const [grade, setGrade] = useState<any>([])
 
     useEffect(() => {
@@ -64,7 +62,7 @@ const MenuCreate = () => {
         };
         try {
             const res = !id ? await addEmployeeService(newFormValue) : await updateEmployeeService(newFormValue, id)
-            console.log(res);
+            console.log(res.data.id);
             !id ? toastMessage('success', 'Record added') : toastMessage('success', 'Change saved')
         } catch (error) {
             console.log(error);

@@ -8,11 +8,13 @@ import CustomDivider from '../../../components/DividerComponent/DividerComponent
 import { UploadIcon } from '../../../components/Icons';
 import InputField from './CreateInputField';
 import DatePickerField from './DatePickerComponent';
+import { contractSaveMultiple } from '../../../services/employeeService';
 
-interface IUploadForm {
-    contract_date: string;
-    name: string;
-    document: File | undefined
+export interface IUploadForm {
+    employee_id: any;
+    contract_dates: string;
+    names: string;
+    documents: any
 }
 
 
@@ -21,15 +23,39 @@ const UploadForm = () => {
     const [contracts, setContracts] = useState<IUploadForm[]>([]);
     const [selectedFileName, setSelectedFileName] = useState('')
 
-    const onSubmit = (data: IUploadForm) => {
+    const onSubmit = async (data: IUploadForm) => {
         const newContract: IUploadForm = {
-            name: data.name,
-            contract_date: moment(data.contract_date).format('YYYY-MM-DD'),
-            document: data.document
+            employee_id: data.employee_id,
+            names: data.names,
+            contract_dates: moment(data.contract_dates).format('YYYY-MM-DD'),
+            documents: data.documents
         };
         setContracts(prevContracts => [...prevContracts, newContract]);
         setSelectedFileName('')
         reset()
+
+        let hasEmployeeId = false; // Biến kiểm tra đã có employee_id hay chưa
+        const formData = new FormData();
+
+        for (let i = 0; i < contracts.length; i++) {
+            const contract = contracts[i];
+            formData.append(`names[${i}]`, contract.names);
+            formData.append(`contract_dates[${i}]`, contract.contract_dates);
+            formData.append(`documents[${i}]`, contract.documents);
+
+            if (!hasEmployeeId) {
+                formData.append('employee_id', contract.employee_id); // Chỉ thêm employee_id nếu chưa có
+                hasEmployeeId = true;
+            }
+        }
+
+        try {
+            await contractSaveMultiple(formData);
+            // Gửi thành công, xử lý kết quả ở đây nếu cần
+        } catch (error) {
+            // Xử lý lỗi ở đây nếu cần
+            console.log(error);
+        }
     };
 
     return (
@@ -43,21 +69,21 @@ const UploadForm = () => {
                 <Stack component='form' sx={{ maxWidth: "400px", gap: '10px', flex: '1 1 0%' }}>
                     <DatePickerField
                         label='contractDate'
-                        name='contract_date'
+                        name='contract_dates'
                         type='text'
                         require={true}
                         control={control}
-                        errors={errors.contract_date ? true : false}
-                        helperText={errors.contract_date ? "" : null}
+                        errors={errors.contract_dates ? true : false}
+                        helperText={errors.contract_dates ? "" : null}
                     />
                     <InputField
                         label='contractName'
-                        name="name"
+                        name="names[]"
                         require={true}
                         control={control}
                         type='text'
-                        errors={errors.name ? true : false}
-                        helperText={errors.name ? '' : null}
+                        errors={errors.names ? true : false}
+                        helperText={errors.names ? '' : null}
                         InputProps={{ disableUnderline: true }}
                     />
                     <Stack sx={{ flexFlow: "row wrap", gap: '10px', justifyContent: 'space-between', marginTop: '12px' }}>
@@ -80,7 +106,7 @@ const UploadForm = () => {
                             >
                                 <FormattedMessage id="uploadFile" />
                                 <Controller
-                                    name="document"
+                                    name="documents"
                                     control={control}
                                     rules={{ required: true }}
                                     render={({ field }) => {
@@ -161,8 +187,8 @@ const UploadForm = () => {
                                         {contracts.map((contract, index) => (
                                             <TableRow key={index}>
                                                 <TableCell>{index + 1}</TableCell>
-                                                <TableCell>{contract.name}</TableCell>
-                                                <TableCell>{contract.contract_date}</TableCell>
+                                                <TableCell>{contract.names}</TableCell>
+                                                <TableCell>{contract.contract_dates}</TableCell>
                                                 <TableCell>
                                                     <Button></Button>
                                                 </TableCell>

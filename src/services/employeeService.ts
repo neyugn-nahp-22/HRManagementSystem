@@ -115,3 +115,12 @@ export const getMarriage = () => {
     },
   });
 };
+
+export const contractSaveMultiple = (formData: any) => {
+  return axios.post(API_PATHS.contract, formData, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get(ACCESS_TOKEN_KEY)}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
